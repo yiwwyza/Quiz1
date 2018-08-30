@@ -14,14 +14,8 @@
     <ons-page>
         <ons-toolbar>
           <div class="center">HOME</div>
-        <ons-page>
-            <p style="text-align: center; margin-top: 10px;">
-              <ons-search-input
-                placeholder="Search"
-                onchange="ons.notification.alert('Searched for: ' + this.value)"
-              ></ons-search-input>
-            </p>
-          </ons-page>
+        </ons-toolbar>
+           
       
         <ons-tabbar swipeable position="auto">
           <ons-tab page="Home.html" label="Home" icon="ion-home, material:md-home" badge="7" active>
@@ -34,10 +28,16 @@
       <template id="Home.html">
         <ons-page id="Home">
           <p style="text-align: center;">
-            This is the first page.
+                <ons-search-input
+                placeholder="Search"
+                onchange="ons.notification.alert('Searched for: ' + this.value)"
+              ></ons-search-input>
+            
           </p>
         </ons-page>
       </template>
+      
+
       
       <template id="Cart.html">
         <ons-page id="Cart">
