@@ -15,6 +15,15 @@
         <ons-toolbar>
           <div class="center">HOME</div>
         </ons-toolbar>
+
+        <ons-page>
+            <p style="text-align: center; margin-top: 10px;">
+              <ons-search-input
+                placeholder="Search"
+                onchange="ons.notification.alert('Searched for: ' + this.value)"
+              ></ons-search-input>
+            </p>
+          </ons-page>
       
         <ons-tabbar swipeable position="auto">
           <ons-tab page="Home.html" label="Home" icon="ion-home, material:md-home" badge="7" active>
