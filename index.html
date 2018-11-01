@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
   <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
@@ -11,485 +14,560 @@
   <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
   <script>
-
-    // Initialize Firebase
+    // Link Firebase
     var config = {
-      apiKey: "AIzaSyAM8Oro8zBvD0US2xpEez2z4-l_DQHstIM",
-      authDomain: "shopee-1.firebaseapp.com",
-      databaseURL: "https://shopee-a6442.appspot.com",
-      projectId: " shopee-a6442",
-      storageBucket: "gs://shopee-a6442.appspot.com",
-      messagingSenderId: "641889602156"
+      apiKey: "AIzaSyBypCrk6bl2ERrbokoh6ksfFqrfdZfXbcw",
+      authDomain: "shopee-a6442.firebaseapp.com",
+      databaseURL: "https://shopee-a6442.firebaseio.com",
+      projectId: "shopee-a6442",
+      storageBucket: "shopee-a6442.appspot.com",
+      messagingSenderId: "402678151657"
     };
     firebase.initializeApp(config);
     // Initialize Cloud Firestore through Firebase
     var db = firebase.firestore();
-
     // Disable deprecated features
     db.settings({
       timestampsInSnapshots: true
     });
   </script>
-  <style>
+
+  <title>Document</title>
+</head>
+
+<style>
     .toolbaricon {
       padding-left: 5px;
       padding-bottom: 5px;
       padding-right: 5px;
-      color: rgb(255, 0, 179);
+      color: rgb(9, 245, 80);
     }
   </style>
-</head>
-
-
 <body>
-  <ons-navigator swipeable id="myNavigator">
-  <ons-page>
-    <ons-toolbar>
-      <div class="left">
-        <ons-icon class="toolbaricon" size="30px" icon="fa-shopping-bag">
-        </ons-icon>
-      </div>
-      <div class="center" id="appname">PSU SHOP</div>
-      <div class="right">
-        <ons-icon class="toolbaricon" size="30px" icon="md-help">
-        </ons-icon>
-      </div>
-    </ons-toolbar>
+  <ons-navigator swipeable id="myNavigator" page="tab3.html">
+    <ons-page>
 
-    <ons-tabbar swipeable position="auto" id="tabbar">
-      <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" badge="07" active>
-      </ons-tab>
-      <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
-      </ons-tab>
-      <ons-tab page="tab3.html" label="Products" icon="fa-braille" active-icon="fa-braille">
-      </ons-tab>
-    </ons-tabbar>
-  </ons-page>
-</ons-navigator>
+      <ons-toolbar style="background-color: #cc6699">
+        <div class="left">
+          <ons-toolbar-button>
+            <ons-icon icon="fa-shopping-bag"></ons-icon>
+
+          </ons-toolbar-button>
+        </div>
+        <div class="center" style="text-align:center" id="appname">PSU Shopping</div>
+        <div class="right">
+          <ons-toolbar-button>
+            <ons-icon icon="md-help"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+      </ons-toolbar>
+
+      <ons-tabbar swipeable position="auto" id="tabbar">   
+        <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" active style="background-color:#cc6699" badge="7" active>
+        </ons-tab>
+        <ons-tab page="tab2.html" label="Cart" icon="md-shopping-cart" id="Fillbadge" badge="3" active-icon="md-shopping-cart" style="background-color: #cc6699">
+        </ons-tab>
+        <ons-tab page="tab3.html" label="product" icon="fa-braille" active-icon="fa-braille" style= "background-color: #cc6699">
+        </ons-tab>
+
+      </ons-tabbar>
+
+    </ons-page>
+  </ons-navigator>
+
   <template id="tab1.html">
     <ons-page id="Tab1">
       <p style="text-align: center; margin-top: 10px;">
-        <ons-search-input placeholder="search" onchange="search(this.value)"></ons-search-input>
+        <ons-search-input placeholder="Search" onchange="search(this.value)"></ons-search-input>
       </p>
       <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
-        <ons-carousel-item id="carousel1" style="background: url('image/1.jpg') no-repeat center; background-size: contain;">
-        </ons-carousel-item>
-        <ons-carousel-item id="carousel2" style="background: url('image/2.jpg') no-repeat center; background-size: contain;">
-        </ons-carousel-item>
-        <ons-carousel-item id="carousel3" style="background: url('image/3.jpg') no-repeat center; background-size: contain;">
-        </ons-carousel-item>
-      </ons-carousel>
-
+          <ons-carousel-item id="carousel1" style="background: url('image/1.jpg')">
+          </ons-carousel-item>
+          <ons-carousel-item id="carousel2" style="background: url('image/2.jpg')">
+          </ons-carousel-item>
+          <ons-carousel-item id="carousel3" style="background: url('image/3.jpg')">
+          </ons-carousel-item>
+        </ons-carousel>
       <div id="icons"></div>
 
       <script id="icon_template" type="text/template">
-        <ons-row style="height:120px" vertical-align="center">  
-        <% categories.forEach(function(category){%>  
-        <ons-col style="background:#FF9900;" width="33%" onclick="changeTab('<%= category.name %>')">
-          <p style="text-align: center; margin: 10px;">
-            <ons-icon size="60px" icon="<%= category.icon %>" ></ons-icon>
-          </p>
-          <p style="text-align: center; margin: 10px;" id="icon1_text">
-            <%= category.name %>
-          </p>
-        </ons-col>
-        <%});%>
-        </ons-row>
-        </script>
+          <ons-row style="height:120px" vertical-align="center">  
+          <% categories.forEach(function(category){%>  
+          <ons-col style="background:<%= category.color %>; border:solid 1px white;color: black;" width="33%"onclick="changeTab('<%= category.name %>')">
+      <p style="text-align: center; margin: 10px;" >
+              <ons-icon size="60px" icon="<%= category.icon %>"></ons-icon>
+            </p>
+            <p style="text-align: center; margin: 10px;" id="icon1_text">
+              
+              <%= category.name %>
+            </p>
+          </ons-col>
+          <%});%>
+          </ons-row>
+          </script>
+          
+      <style type="text/css">
+        .recomended_playlist {
+          padding-left: 10px;
+        }
 
+        .recomended_playlist_title {
+          font-size: 12px;
+          font-weight: bold;
+        }
 
+        .thumbnail {
+          width: 120px;
+          height: 120px;
+          display: table;
+          background-color: rgba(0, 0, 0, 0.42);
+        }
+
+        .thumbnail ons-icon {
+          font-size: 70px;
+          color: #cc66cc;
+          display: table-cell;
+          vertical-align: middle !important;
+        }
+
+        .recomended_list {
+          height: 150px;
+        }
+
+        .recomended {
+          background: linear-gradient(rgb(208, 247, 211), #151715);
+          padding-top: 44px;
+        }
+
+        .menu_list {
+          background: transparent;
+        }
+
+        .menu_item {
+          color: #9966cc;
+          font-size: 12px;
+        }
+
+        .menu_item ons-icon {
+          margin-right: 10px;
+          color: #6666cc;
+          font-size: 16px;
+        }
+
+        .category {
+          margin: 20px 0px;
+          padding: 0px 30px;
+        }
+
+        .category_wrapper {
+          width: 90%;
+          margin: auto;
+          background-color: rgb(16, 148, 224);
+          border: 5px solid;
+          border-color: white;
+        }
+
+        .category_wrapper ons-icon {
+          font-size: 55px;
+          padding-top: 10px;
+          line-height: 0.75em;
+        }
+
+        .category_wrapper1 {
+          width: 90%;
+          margin: auto;
+          background-color: rgba(100, 100, 100, 0.747);
+        }
+
+        .category_wrapper1 ons-icon {
+          font-size: 55px;
+          padding-top: 10px;
+          line-height: 0.75em;
+        }
+
+        .category_wrapper2 {
+          width: 90%;
+          margin: auto;
+          background-color: rgba(65, 65, 65, 0.815);
+        }
+
+        .category_wrapper2 ons-icon {
+          font-size: 55px;
+          padding-top: 10px;
+          line-height: 0.75em;
+        }
+
+        .category_thumbnail {
+          display: inline-block;
+          margin: 16px 0px;
+        }
+
+        .category_title {
+          font-size: 12px;
+          font-weight: bold;
+          padding-top: 10px;
+        }
+      </style>
     </ons-page>
   </template>
+
   <template id="tab2.html">
     <ons-page id="Tab2">
-      <p><h5><b>Shopping Cart</b></h5></p>
-      
-<div id="showDataCart"></div>
+      <ons-list-header>SHOPPING CART</ons-list-header>
 
-     <script id="cart_template" type="text/template">
-      <ons-list>
-        
-      <% cartData.forEach(function(cartData){
-          var cartData = cartData.data(); 
-        %>
-        <ons-list-item>
-          <div class="left">
-            <img class="list-item__thumbnail" src="<%=cartData.photo[0]%>">
-          </div>
-          <div class="center">
-            <span class="list-item__title"><%=cartData.title%></span>
-            <span class="list-item__subtitle" style="color: blue"><%=cartData.price%></span>
-          </div>
-          <div class="right">
-            <p style="text-align: center; margin: 10px;">
-              <ons-icon style="color: grey" size="30px" icon="md-delete"></ons-icon>
-            </p>
-          </div>
-        </ons-list-item>    
-      </ons-list>
-      <%})%>
-    </script>
-      <p style="text-align: center; margin: 10px;">
-        <ons-button modifier="large">PROCEED TO PAY</ons-button>
-      </p>
+      <div id="photo"></div>
+      <div id="showpriceproduct"></div>
+      <script id="photo_template" type="text/template"> 
+                    <% 
+                     cart.forEach(function(cart){
+                     console.log(cart)
+                      %>
+            <div>          
+            <ons-list-item>
+                <div class="left">
+                    <img class="list-item__thumbnail" src="<%= cart.data().Photo %>">
+                </div>
+                <div class="center">
+                    <span class="list-item__title"><%= cart.itemname %></span>
+                    <span class="list-item__subtitle" style="color: blue;"><%= cart.data().price %></span>
+                </div>
+                <div class="right">
+ <ons-icon icon="md-delete" onclick="deletebutton(<%=num%>); deleteprice('<%= cart.data().price %>')"></ons-icon></div>
+</div>
+            </ons-list-item><% });%> 
+ </Script>
+      <ons-button modifier="large">PROCEED TO PAY</ons-button>
     </ons-page>
   </template>
 
   <template id="tab3.html">
-      <ons-page id="Tab3">
-        <p style="text-align: center; margin-top: 10px;">
-          <ons-search-input placeholder="Search" onchange="search(this.value)"></ons-search-input>
-        </p>
-        <hr>
-        
-        <h1 class="text-center">ÊÔ¹¤éÒÊØ´Hot</h1>
-        <div id="allPro"></div>
-        <script id="allPro_template" type="text/template"> 
-          <ons-row>
-         
-        <% allPro.forEach(function(allPro){
-          var item = allPro.data();
+    <ons-page>
+      <p style="text-align: center; margin-top: 10px;">
+        <ons-search-input placeholder="Search" onchange="search(this.value)"></ons-search-input>
+      </p>
+      <div id="product"></div>
+      <script id="product_template" type="text/template"> 
+ <ons-row>
+        <% product.forEach(function(product){
+          var products = product.data();
+          %>
+<ons-col width="50%" >
+  <ons-card style="width:180px; height:190px;" onclick="detail('<%= products.pid %>')">
+        <img class="" src="<%= products.Photo %>" width="99%"height="70px"><br>
+<%= products.Category %><br>
+<%= products.title %><br>
+<%= products.price %>
+  </ons-card></ons-col>
+<%});%> 
+ </ons-row>
+</Script>
+      </div>
+    </ons-page>
+  </template>
 
-          %>  
-          <ons-col width="50%" onclick="getDetail('<%=item.title%>')">
-            <ons-card style="width:90%; height:90%;">
-              <center><img src="<%=item.photo1%>" alt="Onsen UI" style="width:120px; height:120px;"></center>
-              <div class="title">
-               <%=item.title%>
-              </div>
-              <div class="content" id="Pdetail">
-                Price: <%= item.price %>
-              </div>
-            </ons-card>
-          </ons-col>
-          <%});%>
-        </ons-row>
-        </script>
-  
-        
-        <!-- <ons-button modifier="large" onclick="addnewdata()" >
-          ADD DATA
-        </ons-button> -->
-  
-      </ons-page>
-    </template>
-    <script>
-        var datadep = localStorage.getItem('getDep');
-        console.log(datadep)
-        </script>
-    <template id="detailP.html">
-      <ons-page>
-      
-          <ons-toolbar>
-              <div class="left"><ons-back-button>Back</ons-back-button></div>
-              <div class="center">Detail</div>
-          </ons-toolbar>
-  
-         <div id="showDep"></div>
-        
-         <script id="Detailproduct_template" type="text/template">
-            <ons-card>
-               
-                <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
-                  <% dataDep.forEach(function(dataDep){   
-                    var data = dataDep.data(); %>
-                      <ons-carousel-item id="carousel1DeP" style="background: url(' <%= data.photo[0]%>') no-repeat center; background-size: contain;">
-                      </ons-carousel-item>
-                      <ons-carousel-item id="carousel2DeP" style="background: url('<%= data.photo[1]%>') no-repeat center; background-size: contain;">
-                      </ons-carousel-item>
-                      <ons-carousel-item id="carousel3DeP" style="background: url('<%= data.photo[2]%>') no-repeat center; background-size: contain;">
-                      </ons-carousel-item>
-                      
-                      
+  <template id="tab4.html">
+    <ons-page>
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button>Products</ons-back-button>
+        </div>
+        <div class="center"></div>
+      </ons-toolbar>
+      <div id="detail"></div>
+      <script id="detail_template" type="text/template"> 
+        <ons-card>
+          <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
+            <% detail.forEach(function(data){  
+              var data = data.data() %>
+ <ons-carousel-item id="carousel1DeP" style="background: url('<%= data.Photo %>') no-repeat center; background-size: contain;">  
+                </ons-carousel-item>
+         <% })%>
                </ons-carousel>
-                  
-            
-                    
-                <div class="title">
-                  <%= data.price%>
-                </div>
-                <div class="content">
-                  <div>
-                    <%= data.title %>
-                  </div>
-         
-                </div>
-                <p style="text-align: center; margin: 10px;">
-                  <ons-button modifier="large" onclick="addtocart('<%= data.title %>');" >Add To Cart</ons-button>
-                </p>
-                <%})%>
-              </ons-card>
-         </script>
-      </ons-page>
-    </template>
+         <% detail.forEach(function(data){   
+          var data = data.data(); %>
+       
+          <div class="content">
+            <center><br><div>
+              <%= data.title %>
+            </div></br>
+            <br><div class="title">
+              <%= data.price%>
+            </div>
+          </br>
+        </center>
+          </div>
+          <center>
+          <ons-button onclick="addtocart('<%= data.pid %>');totalprice('<%= data.price%>')">ADD TO CART</ons-button>
+        </center>
+          <%})%>
+        </ons-card>
+      </Script>
+    </ons-page>
+  </template>
 </body>
-
 <script>
+  //gethomedata  
   getHomeData();
   tatol();
+
   document.addEventListener('prechange', function (event) {
     if (event.index == 0) {
       console.log('Home clicked');
       // get data for home screen  
       getHomeData();
-    } else if (event.index == 2) {
-    console.log('Cart clicked');
-    getData2cart()
-  
-    } if (event.index == 2) {
-       
-      console.log('All products clicked');
-      var name2 = localStorage.getItem('name');
-      var item = localStorage.getItem('items');
-      console.log('products clicked');
-      // get data for all product screen 
+    }  if (event.index == 1) {
       console.log('Cart clicked');
-    // get data for cart screen  
-    
-      if(name2==null && item == null){
-        console.log(name2)
-        getAllProduct();}
-        else if(name2!=null && item == null) {
+      getData2cart()
+    }  else if (event.index == 2) {
+      console.log('Cart click');
+      var name = localStorage.getItem('name');
+      var items = localStorage.getItem('items');
+      if (name == null&&items==null) {
+        getproductData()
+      }
+      else if (name != null&&items==null){ 
+        getproductData(name) }
+      else {  
 
-          getAllProduct(name2);
-        }else{
-
-        }
-        localStorage.clear();
-
-    }
+      }
+    }else if (event.index == 3) {
+      var title = localStorage.getItem('title');
+      console.log('Cart click');
+      // test(title)
+    }localStorage.clear();
   });
 
-  function changeTab(name){
-    localStorage.setItem('name' , name);
-    document.getElementById('tabbar').setActiveTab(2);
-
-  }
-
   function getHomeData() {
-
-    var docRef = db.collection("UI").doc("home");
-    docRef.get().then(function (doc) {
-      if (doc.exists) {
-
-        //display data
-        console.log("Document data:", doc.data());
-        var data = doc.data();
-        $('#appname').html(data.appname);
-        var style = "background: url('" + data.slides[0] + "') no-repeat center; background-size: contain;'";
-        $('#carousel1').attr('style', style)
-        var icon_template = $('#icon_template').html();
-        var html = ejs.render(icon_template, { categories: data.categories });
-        $('#icons').html(html);
-
-      } else {
-
-        console.log("No such document!");
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    });
-
-    //$.getJSON('home.json', function (data) {
-    //  console.log(data);
-    // $('#appname').html(data.appname);
-    // var style = "background: url('images/" + data.slides[0] + "') no-repeat center; background-size: contain;'";
-    // $('#carousel1').attr('style', style)
-    // var icon_template = $('#icon_template').html();
-    // var html = ejs.render(icon_template, { categories: data.categories });
-    //  $('#icons').html(html);
-    // });
-  }
-  // function getCartData() {
-  //   var docRef = db.collection("UI").doc("cart");
-  //   docRef.get().then(function (doc) {
-  //     if (doc.exists) {
-
-  //       //display data
-  //       console.log("Document data:", doc.data());
-  //       var data = doc.data();
-  //       var img_template = $('#img_template').html();
-  //       var html = ejs.render(img_template, { cart: data.cart });
-  //       $('#img').html(html);
-
-
-  //     } else {
-
-  //       console.log("No such document!");
-  //     }
-  //   }).catch(function (error) {
-  //     console.log("Error getting document:", error);
-  //   });
-  // }
-
-
-
-  // function getCategoriesData() {
-  //   var docRef = db.collection("UI").doc("categories");
-  //   docRef.get().then(function (doc) {
-  //     if (doc.exists) {
-
-  //       //display data
-  //       console.log("Document data:", doc.data());
-  //       var data = doc.data();
-  //       var prod_template = $('#prod_template').html();
-  //       var html = ejs.render(prod_template, { Products: data.Products });
-  //       $('#prod').html(html);
-
-
-  //     } else {
-
-  //       console.log("No such document!");
-  //     }
-  //   }).catch(function (error) {
-  //     console.log("Error getting document:", error);
-  //   });
-  // }
-  function showDetailP() {
-  var dataproduct = localStorage.getItem('getDep');
-  var apr = db.collection("Product").where("title", "==", dataproduct);
-  apr.get().then(function (querySnapshot) {
-    var Detailproduct_template = $('#Detailproduct_template').html();
-    var html = ejs.render(Detailproduct_template, { dataDep: querySnapshot.docs });
-    $('#showDep').html(html); 
-  })
-
-}
-
-
-  function getAllProduct(name2,item) {
-    if(name2==null){
-      var apr = db.collection("Product")
-      apr.get().then(function (querySnapshot) { 
- 
-      var allPro_template = $('#allPro_template').html();
-      console.log(querySnapshot);
-      var html = ejs.render(allPro_template, { allPro : querySnapshot.docs });
-      $('#allPro').html(html);
-    })
-  }
-
-   else{var apr = db.collection("product").where("category","==",name2);
-    apr.get().then(function (querySnapshot) {
-      
-      var allPro_template = $('#allPro_template').html(); 
-      console.log(querySnapshot);
-      var html = ejs.render(allPro_template, { allPro : querySnapshot.docs });
-      $('#allPro').html(html);
-    })}
-}
-
-
-
-  function addNewData() {
-
-    var data = {
-      pid: 5,
-      title: 'iPhone XS ',
-      price: 57000,
-      category: 'smartphone'
-    }
-
-    db.collection("Product").add(data)
-    .then(function (docRef) {
-      console.log("Document written with ID: ", docRef.id);
-    })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
+    $.getJSON('home.json', function (data) {
+      var docRef = db.collection("UI").doc("home");
+      docRef.get().then(function (doc) {
+        if (doc.exists) {
+          //Display data
+          console.log("Document data:", doc.data());
+          var data = doc.data();
+          console.log(data.slides[0])
+          $('#appname').html(data.appname);
+          var style = "background: url('images/" + data.slides[0] + "') no-repeat center; background-size: contain;'";
+          $('#carousel1').attr('style', style)
+          var style = "background: url('images/" + data.slides[1] + "') no-repeat center; background-size: contain;'";
+          $('#carousel2').attr('style', style)
+          var style = "background: url('images/" + data.slides[2] + "') no-repeat center; background-size: contain;'";
+          $('#carousel3').attr('style', style)
+          var icon_template = $('#icon_template').html();
+          var html = ejs.render(icon_template, { categories: data.categories });
+          $('#icons').html(html);
+        } else {
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
       });
-
+    })
   }
-  function getDetail(getDep){
-localStorage.setItem("getDep",getDep)
-showDetailP();
-myNavigator.pushPage('detailP.html');
 
-}
+  function getproductData(name,item) {
+    if (name == null) {
+      db.collection("Product").get()
+        .then(function (querySnapshot) {
+          // doc.data() is never undefined for query doc snapshots
+          var product_template = $('#product_template').html();
+          console.log(querySnapshot.docs);
+          var html = ejs.render(product_template, { product: querySnapshot.docs });
+          $('#product').html(html);
+        })
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
+        });
+    } else {
+      db.collection("Product").where("category", "==", name).get()
+        .then(function (querySnapshot) {
+          if (querySnapshot.docs.length == 0) {
+            var html = "<center><font color='red'>???????????</font></center>"
+            db.collection("Product").get()
+              .then(function (querySnapshot) {
+                // doc.data() is never undefined for query doc snapshots
+                var product_template = $('#product_template').html();
+                console.log(querySnapshot);
+                html += ejs.render(product_template, { product: querySnapshot.docs });
+                $('#product').html(html);
+              })
+              .catch(function (error) {
+                console.log("Error getting documents: ", error);
+              });
+          } else {
+            db.collection("Product").where("category", "==", name).get()
+              .then(function (querySnapshot) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(querySnapshot.docs);
+                var product_template = $('#product_template').html();
+                var html = ejs.render(product_template, { product: querySnapshot.docs });
+                $('#product').html(html);
+              })
+              .catch(function (error) {
+                console.log("Error getting documents: ", error);
+              });
+          }
+          // doc.data() is never undefined for query doc snapshots
+          // var product_template = $('#product_template').html();
+          // console.log(querySnapshot.docs);
+          // var html = ejs.render(product_template, { product: querySnapshot.docs });
+          // $('#product').html(html);
+        })
+    }
+  }
 
-// search //
-function search(search) {
- 
- const filterItems = (needle, heystack) => {
+  function changeTab(name) {
+    console.log(name)
+    document.getElementById('tabbar').setActiveTab(2);
+    localStorage.setItem('name', name);
+   
+  }
+
+  function detail(pid) {
+    localStorage.setItem('id', pid);
+    myNavigator.pushPage('tab4.html')
+    showdetail()
+    
+  }
+
+  //Show Detail
+  function showdetail() {
+    var id = localStorage.getItem('id');
+    console.log('xxxxxxxxxxxxxxxxxxxxx', id)
+    db.collection("Product").where("pid", "==", id).get()
+      .then(function (querySnapshot) {
+        
+        console.log(querySnapshot.docs);
+        var detail_template = $('#detail_template').html();
+        var html = ejs.render(detail_template, { detail: querySnapshot.docs });
+        $('#detail').html(html);
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+    localStorage.clear();
+  }
+
+  function search(search) {
+
+const filterItems = (needle, heystack) => {
   let query = needle.toLowerCase();
   return heystack.filter(item => item.data().title.toLowerCase().indexOf(needle) >= 0);
 }
 console.log("55+", filterItems(search, data));
-var item=filterItems(search, data);
-console.log("xxx",item)
+var item = filterItems(search, data);
+console.log("xxx", item)
 localStorage.setItem('items', item);
 
-
-console.log('search',item);
-
+console.log('tong', item);
 test(item);
-
 document.getElementById('tabbar').setActiveTab(2);
-  // localStorage.setItem('title', item);
+// localStorage.setItem('title', item);
 }
-
-
 const data = []
 function tatol() {
-  console.log(search);
-  db.collection("Product").get()
-    .then(function (querySnapshot) {
+console.log(search);
+db.collection("Product").get()
+  .then(function (querySnapshot) {
+    querySnapshot.docs.forEach(function (item) {
+      data.push(item)
+      console.log(data)
+    });
 
-      querySnapshot.docs.forEach(function (item) {
-        data.push(item)
-        console.log(data)
-      });
-      
-    })
-  // const fruits = data[1];
-}
-
-
-function test(title){
-console.log("888",title);
-
-  console.log('tset',title);
-      var allPro_template = $('#allPro_template').html();
-       var html = ejs.render(allPro_template, { allPro: title });
-      $('#allPro').html(html);
-
-}
-
-var dataCart = [];
-function addtocart(add2cart){
-localStorage.clear('quentinTarantino');
-localStorage.setItem('quentinTarantino',add2cart);
-var retrievedData = localStorage.getItem("quentinTarantino");
-console.log(retrievedData);
-dataCart.push(retrievedData);
-alert(dataCart);
-}
-
-
-
-function getData2cart(){
-console.log('functioncart');
-console.log(dataCart);
-document.getElementById('showDataCart').innerHTML = '';
-dataCart.forEach(function(dataCart){
-  var apr = db.collection("Product").where("title", "==",dataCart);
-  apr.get().then(function (querySnapshot) {
-    console.log(querySnapshot.docs)
-    var cart_template = $('#cart_template').html();
-    var html = ejs.render(cart_template, { cartData: querySnapshot.docs });
-    
-    $('#showDataCart').append(html); 
-  
   })
-  
-})
+// const fruits = data[1];
 }
 
 
+  function test(title) {
+    console.log("tong", title);
+    // for(var i =0;i<tests.length;i++){
+    console.log('tset', title);
+    if (title == 0) {
+      var html = "<center><font color='red'>No products found.</font></center>"
+      db.collection("Prouct").get()
+        .then(function (querySnapshot) {
+          
+          var product_template = $('#product_template').html();
+          console.log(querySnapshot);
+          html += ejs.render(product_template, { product: querySnapshot.docs });
+          $('#product').html(html);
+        })
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
+        });
+    }
+    else {
+      var product_template = $('#product_template').html();
+      var html = ejs.render(product_template, { product: title });
+      $('#product').html(html);
+    }
 
+  
+  }
+  //Add Products
+  var dataCart = [];
+  function addtocart(add2cart) {
+    localStorage.clear('quentinTarantino');
+    localStorage.setItem('quentinTarantino', add2cart);
+    var retrievedData = localStorage.getItem("quentinTarantino");
+    console.log(retrievedData);
+    dataCart.push(retrievedData);
+    alert(dataCart);
+  }
+  
+  function getData2cart() {
+    var Delete = []
+    document.getElementById('photo').innerHTML = ""
+    console.log(dataCart);
+    var j = 0
+    dataCart.forEach(function (remove) {
+      Delete.push(j)
+      console.log(Delete)
+      j++
+    });
+    var testnum = 0;
+    dataCart.forEach(function (dataCart) {
+      var apr = db.collection("Product").where("pid", "==", dataCart);
+      apr.get().then(function (querySnapshot) {
+        console.log(querySnapshot.docs)
+        var photo_template = $('#photo_template').html();
+        var html = ejs.render(photo_template, { cart: querySnapshot.docs, num: testnum });
+        console.log(html);
+        $('#photo').append(html);
+        testnum = testnum + 1;
+      })
+    })
+  }
+  //Delete Products
+  function deletebutton(i) {
+    console.log(i);
 
+    console.log(dataCart);
 
+    var remove = dataCart.splice(i, 1)
 
+    alert("Do you want to delete the item?");
+    getData2cart()
 
+  }
+  var priceitem = 0;
+  //Total Price
+  function totalprice(price1) {
+    var price1 = parseInt(price1, 10)
+    console.log(price1);
+
+    priceitem = priceitem + price1;
+    $('#showpriceproduct').html("<p><b>&nbsp; Total Price is : </b>" + priceitem + " </p>");
+  }
+  function deleteprice(price2) {
+    var price2 = parseInt(price2, 10)
+    console.log(price2);
+
+    priceitem = priceitem - price2;
+    $('#showpriceproduct').html("<p><b>&nbsp; Total Price is : </b>" + priceitem + " </p>");
+
+  }
 </script>
 
 </html>
